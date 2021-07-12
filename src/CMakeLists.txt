@@ -12,6 +12,7 @@ option(CONFIG_DISABLE_PRETTY_LOGGING "Don't colorize log ouputs" OFF)
 option(CONFIG_BUILD_SANITIZER "Enable different sanitizers during build" OFF)
 option(CONFIG_BUILD_STATIC "Build static library" ON)
 option(CONFIG_BUILD_SHARED "Build shared library" ON)
+option(CONFIG_OSDP_TRS "Enabled Transparent Reader Support" OFF)
 
 if (NOT CONFIG_BUILD_STATIC AND NOT CONFIG_BUILD_SHARED)
 	message(FATAL_ERROR "Both static and shared builds must not be disabled")
@@ -35,6 +36,10 @@ endif()
 
 if (CONFIG_OSDP_STATIC_PD)
 	list(APPEND LIB_OSDP_DEFINITIONS "-DCONFIG_OSDP_STATIC_PD")
+endif()
+
+if (CONFIG_OSDP_TRS)
+	list(APPEND LIB_OSDP_DEFINITIONS "-DCONFIG_OSDP_TRS")
 endif()
 
 # optionally, find and use OpenSSL or MbedTLS
@@ -67,6 +72,12 @@ endif()
 if (CONFIG_OSDP_PACKET_TRACE OR CONFIG_OSDP_DATA_TRACE)
 	list(APPEND LIB_OSDP_SOURCES
 		${CMAKE_CURRENT_SOURCE_DIR}/osdp_diag.c
+	)
+endif()
+
+if (CONFIG_OSDP_TRS)
+	list(APPEND LIB_OSDP_SOURCES
+		${CMAKE_CURRENT_SOURCE_DIR}/osdp_trs.c
 	)
 endif()
 
