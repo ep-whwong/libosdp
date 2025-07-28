@@ -416,9 +416,9 @@ struct osdp_pd {
     int pd_to_offline_count; /* counter for PD to delare offline */
     int phy_retry_count; /* command retry counter */
     uint32_t wait_ms; /* wait time in MS to retry communication */
-    int64_t tstamp; /* Last POLL command issued time in ticks */
-    int64_t sc_tstamp; /* Last received secure reply time in ticks */
-    int64_t phy_tstamp; /* Time in ticks since command was sent */
+    uint32_t tstamp; /* Last POLL command issued time in ticks */
+    uint32_t sc_tstamp; /* Last received secure reply time in ticks */
+    uint32_t phy_tstamp; /* Time in ticks since command was sent */
     uint32_t request; /* Event loop requests */
 
     uint16_t peer_rx_size; /* Receive buffer size of the peer PD/CP */
@@ -454,7 +454,7 @@ struct osdp_pd {
     //	logger_t logger;
 
     /* Opaque packet capture pointer (see osdp_pcap.c) */
-    void *packet_capture_ctx;
+    // void *packet_capture_ctx;
 
     sc_get_master_key_fn_t sc_get_master_key;
 };
