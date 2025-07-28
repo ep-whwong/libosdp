@@ -176,7 +176,7 @@ static void KeyExpansion(uint8_t* RoundKey, const uint8_t* Key)
 
       // Function RotWord()
       {
-        const uint8_t u8tmp = tempa[0];
+        uint8_t u8tmp = tempa[0];
         tempa[0] = tempa[1];
         tempa[1] = tempa[2];
         tempa[2] = tempa[3];

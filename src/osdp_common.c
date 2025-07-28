@@ -22,10 +22,10 @@ uint16_t osdp_compute_crc16(const uint8_t *buf, size_t len)
 	return crc16_itu_t(0x1D0F, buf, len);
 }
 
-__weak int64_t osdp_millis_now(void)
+/* __weak int64_t osdp_millis_now(void)
 {
 	return millis_now();
-}
+} */
 
 int64_t osdp_millis_since(int64_t last)
 {
@@ -175,7 +175,6 @@ int osdp_rb_pop_buf(struct osdp_rb *p, uint8_t *buf, int max_len)
 }
 
 /* --- Exported Methods --- */
-
 OSDP_EXPORT
 void osdp_logger_init(const char *name, int log_level,
 		      osdp_log_puts_fn_t log_fn)
@@ -187,8 +186,10 @@ void osdp_logger_init(const char *name, int log_level,
 #ifdef OPT_DISABLE_PRETTY_LOGGING
 	flags |= LOGGER_FLAG_NO_COLORS;
 #endif
+#if (!defined(__BARE_METAL__))
 	if (!log_fn)
-		file = stderr;
+		file = log_putchar;
+#endif
 
 	logger_init(&ctx, log_level, name, REPO_ROOT, log_fn, file, NULL, flags);
 	logger_set_default(&ctx); /* Mark this config as logging default */
